@@ -3,111 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Residual Method Tester</title>
+    <title>Residual Method Testing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
-        .input-group { @apply bg-blue-50 p-4 rounded-lg border border-blue-100; }
-        .calc-group { @apply bg-white p-4 rounded-lg border border-gray-200 shadow-sm; }
-        .label-text { @apply block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1; }
+        .input-box { @apply w-full bg-white border border-blue-300 rounded p-2 text-lg font-bold focus:ring-2 focus:ring-blue-500 outline-none; }
+        .calc-display { @apply w-full bg-gray-100 border border-gray-300 rounded p-2 text-lg font-mono text-gray-700; }
+        .label-style { @apply block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1; }
     </style>
 </head>
-<body class="bg-gray-100 p-6 font-sans">
-    <div class="max-w-6xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
-            <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
-                <h1 class="text-xl font-bold tracking-tight">RESIDUAL METHOD TESTING <span class="text-blue-400 ml-2">| PROJECT: X</span></h1>
-                <div class="text-xs font-mono bg-slate-800 px-3 py-1 rounded border border-slate-700">STATUS: CALCULATION ACTIVE</div>
+<body class="bg-slate-50 p-6">
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-200">
+        <div class="bg-blue-900 p-6 text-white text-center">
+            <h1 class="text-2xl font-black italic tracking-tighter">RESIDUAL METHOD TESTING TEMPLATE</h1>
+        </div>
+
+        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="space-y-6">
+                <h2 class="text-blue-700 font-bold border-b pb-2">📂 USER INPUTS</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="label-style">Land Area (m²)</label>
+                        <input type="number" id="in_area" value="1000" oninput="calc()" class="input-box text-blue-800">
+                    </div>
+                    <div>
+                        <label class="label-style">K2 Coefficient</label>
+                        <input type="number" id="in_k2" value="2.5" step="0.1" oninput="calc()" class="input-box text-blue-800">
+                    </div>
+                    <div>
+                        <label class="label-style">Costs per m² (Net)</label>
+                        <input type="number" id="in_cost_m2" value="300" oninput="calc()" class="input-box">
+                    </div>
+                    <div>
+                        <label class="label-style">Flat Price per m² (Net)</label>
+                        <input type="number" id="in_f_price" value="1400" oninput="calc()" class="input-box">
+                    </div>
+                    <div>
+                        <label class="label-style">Comm. Price per m² (Net)</label>
+                        <input type="number" id="in_c_price" value="1400" oninput="calc()" class="input-box">
+                    </div>
+                    <div>
+                        <label class="label-style">Parking Unit Price (Net)</label>
+                        <input type="number" id="in_p_price" value="6000" oninput="calc()" class="input-box">
+                    </div>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
+            <div class="space-y-6 bg-slate-50 p-6 rounded-lg">
+                <h2 class="text-green-700 font-bold border-b pb-2">📊 CALCULATED FIELDS</h2>
                 
-                <div class="p-8 space-y-8 bg-slate-50/50">
-                    <h2 class="text-blue-600 font-black text-xs uppercase tracking-widest flex items-center">
-                        <span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span> Manual Inputs
-                    </h2>
-
-                    <div class="input-group">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="label-text">Total Land Area (m²)</label>
-                                <input type="number" id="inp_area" value="1000" oninput="calc()" class="w-full bg-transparent border-b-2 border-blue-300 py-1 text-2xl font-bold outline-none focus:border-blue-600">
-                            </div>
-                            <div>
-                                <label class="label-text">K2 Coefficient</label>
-                                <input type="number" id="inp_k2" value="2.5" step="0.1" oninput="calc()" class="w-full bg-transparent border-b-2 border-blue-300 py-1 text-2xl font-bold outline-none focus:border-blue-600">
-                            </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="label-style">Buildable Area K2</label>
+                        <div id="out_k2" class="calc-display font-bold">0</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="label-style text-[8px]">Flat Area</label>
+                            <div id="out_flat" class="calc-display text-sm italic font-medium">0</div>
+                        </div>
+                        <div>
+                            <label class="label-style text-[8px]">Commercial</label>
+                            <div id="out_comm" class="calc-display text-sm italic font-medium">0</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="label-style text-[8px]">Air</label>
+                            <div id="out_air" class="calc-display text-xs">0</div>
+                        </div>
+                        <div>
+                            <label class="label-style text-[8px]">Stairs</label>
+                            <div id="out_stair" class="calc-display text-xs">0</div>
+                        </div>
+                        <div>
+                            <label class="label-style text-[8px]">Parking (Units)</label>
+                            <div id="out_park" class="calc-display text-xs">0</div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <label class="label-text">Costs per m² (Ex-VAT)</label>
-                            <input type="number" id="inp_cost_m2" value="300" oninput="calc()" class="w-full border-b border-gray-300 py-1 font-semibold outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="label-text">Parking Price (Ex-VAT)</label>
-                            <input type="number" id="inp_p_price" value="6000" oninput="calc()" class="w-full border-b border-gray-300 py-1 font-semibold outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="label-text">Flat Price / m²</label>
-                            <input type="number" id="inp_f_price" value="1400" oninput="calc()" class="w-full border-b border-gray-300 py-1 font-semibold outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="label-text">Comm. Price / m²</label>
-                            <input type="number" id="inp_c_price" value="1400" oninput="calc()" class="w-full border-b border-gray-300 py-1 font-semibold outline-none focus:border-blue-500">
-                        </div>
+                    <div class="mt-8 pt-4 border-t border-gray-300">
+                        <label class="label-style text-blue-900">Total Residual Land Value</label>
+                        <div id="res_land" class="text-4xl font-black text-blue-900">$0</div>
                     </div>
-
-                    <div class="pt-4 border-t border-gray-200">
-                        <label class="label-text text-blue-600">Area Distribution Logic (%)</label>
-                        <div class="grid grid-cols-4 gap-2 mt-2">
-                            <div><span class="text-[9px] text-gray-400">Flat</span><input type="number" id="r_flat" value="80" oninput="calc()" class="w-full border rounded p-1 text-xs"></div>
-                            <div><span class="text-[9px] text-gray-400">Comm</span><input type="number" id="r_comm" value="10" oninput="calc()" class="w-full border rounded p-1 text-xs"></div>
-                            <div><span class="text-[9px] text-gray-400">Air</span><input type="number" id="r_air" value="5" oninput="calc()" class="w-full border rounded p-1 text-xs"></div>
-                            <div><span class="text-[9px] text-gray-400">Stair</span><input type="number" id="r_stair" value="5" oninput="calc()" class="w-full border rounded p-1 text-xs"></div>
-                        </div>
+                    
+                    <div class="mt-4 p-3 bg-white rounded border border-gray-200">
+                        <div class="flex justify-between text-[10px] font-bold uppercase"><span class="text-gray-400">Total Rev:</span><span id="res_rev"></span></div>
+                        <div class="flex justify-between text-[10px] font-bold uppercase mt-1"><span class="text-gray-400">Build Costs:</span><span id="res_costs" class="text-red-500"></span></div>
                     </div>
                 </div>
-
-                <div class="p-8 space-y-6">
-                    <h2 class="text-green-600 font-black text-xs uppercase tracking-widest flex items-center">
-                        <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span> Automated Calculations
-                    </h2>
-
-                    <div class="bg-blue-600 p-6 rounded-2xl text-white shadow-lg shadow-blue-200">
-                        <p class="text-[10px] font-bold uppercase opacity-70">Residual Land Value</p>
-                        <h2 id="out_land_val" class="text-5xl font-black mt-1">$0</h2>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="calc-group">
-                            <label class="label-text">Buildable Area K2</label>
-                            <span id="out_k2" class="text-lg font-bold text-slate-800">0 m²</span>
-                        </div>
-                        <div class="calc-group">
-                            <label class="label-text">Total Build Area</label>
-                            <span id="out_total_build" class="text-lg font-bold text-slate-800">0 m²</span>
-                        </div>
-                    </div>
-
-                    <div class="calc-group divide-y divide-gray-100">
-                        <div class="flex justify-between py-2"><span class="text-sm text-gray-500">Calculated Flat Area</span><span id="out_flat" class="font-bold"></span></div>
-                        <div class="flex justify-between py-2"><span class="text-sm text-gray-500">Calculated Comm. Area</span><span id="out_comm" class="font-bold"></span></div>
-                        <div class="flex justify-between py-2"><span class="text-sm text-gray-500">Calculated Stairs/Airs</span><span id="out_others" class="font-bold"></span></div>
-                    </div>
-
-                    <div class="space-y-2 border-t pt-4">
-                        <div class="flex justify-between text-sm"><span class="text-gray-500">Total Revenue</span><span id="out_rev" class="font-bold"></span></div>
-                        <div class="flex justify-between text-sm"><span class="text-gray-500">Construction Costs</span><span id="out_costs" class="text-red-500 font-bold"></span></div>
-                        <div class="flex justify-between text-sm font-bold text-green-600 pt-2 border-t">
-                            <span>Dev. Profit (30%)</span>
-                            <span id="out_profit"></span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -118,45 +104,39 @@
 
         function calc() {
             // INPUTS
-            const land = +document.getElementById('inp_area').value;
-            const k2 = +document.getElementById('inp_k2').value;
-            const cM2 = +document.getElementById('inp_cost_m2').value;
-            const fP = +document.getElementById('inp_f_price').value;
-            const cP = +document.getElementById('inp_c_price').value;
-            const pP = +document.getElementById('inp_p_price').value;
+            const area = +document.getElementById('in_area').value;
+            const k2 = +document.getElementById('in_k2').value;
+            const bCost = +document.getElementById('in_cost_m2').value;
+            const fP = +document.getElementById('in_f_price').value;
+            const cP = +document.getElementById('in_c_price').value;
+            const pP = +document.getElementById('in_p_price').value;
 
-            // RATIOS
-            const rf = +document.getElementById('r_flat').value / 100;
-            const rc = +document.getElementById('r_comm').value / 100;
-            const ra = +document.getElementById('r_air').value / 100;
-            const rs = +document.getElementById('r_stair').value / 100;
+            // FORMULAS (Calculated Fields)
+            const k2Area = area * k2;
+            const flat = k2Area * 0.80; // Assuming 80% distribution
+            const comm = k2Area * 0.10;
+            const air = k2Area * 0.05;
+            const stair = k2Area * 0.05;
+            const totalBuild = flat + comm + air + stair;
+            const parkUnits = Math.floor(flat / 60);
 
-            // CALCULATIONS
-            const buildK2 = land * k2;
-            const areaF = buildK2 * rf;
-            const areaC = buildK2 * rc;
-            const areaA = buildK2 * ra;
-            const areaS = buildK2 * rs;
-            const totalBuild = areaF + areaC + areaA + areaS;
-            
-            const parkUnits = Math.floor(areaF / 60); // Standard rule, adjust if needed
-
-            const totalRev = (areaF * fP) + (areaC * cP) + (parkUnits * pP);
-            const buildCosts = totalBuild * cM2;
+            // FINANCIALS
+            const totalRev = (flat * fP) + (comm * cP) + (parkUnits * pP);
+            const buildCosts = totalBuild * bCost;
             const profit = totalRev * PROFIT_RATE;
             const residual = totalRev - buildCosts - profit;
 
-            // OUTPUTS
-            document.getElementById('out_k2').innerText = buildK2.toLocaleString() + ' m²';
-            document.getElementById('out_total_build').innerText = totalBuild.toLocaleString() + ' m²';
-            document.getElementById('out_flat').innerText = Math.round(areaF).toLocaleString() + ' m²';
-            document.getElementById('out_comm').innerText = Math.round(areaC).toLocaleString() + ' m²';
-            document.getElementById('out_others').innerText = Math.round(areaA + areaS).toLocaleString() + ' m²';
-            
-            document.getElementById('out_rev').innerText = fmt(totalRev);
-            document.getElementById('out_costs').innerText = '-' + fmt(buildCosts);
-            document.getElementById('out_profit').innerText = '-' + fmt(profit);
-            document.getElementById('out_land_val').innerText = fmt(residual);
+            // UPDATE UI
+            document.getElementById('out_k2').innerText = Math.round(k2Area).toLocaleString() + ' m²';
+            document.getElementById('out_flat').innerText = Math.round(flat).toLocaleString();
+            document.getElementById('out_comm').innerText = Math.round(comm).toLocaleString();
+            document.getElementById('out_air').innerText = Math.round(air).toLocaleString();
+            document.getElementById('out_stair').innerText = Math.round(stair).toLocaleString();
+            document.getElementById('out_park').innerText = parkUnits;
+
+            document.getElementById('res_rev').innerText = fmt(totalRev);
+            document.getElementById('res_costs').innerText = '-' + fmt(buildCosts);
+            document.getElementById('res_land').innerText = fmt(residual);
         }
         calc();
     </script>

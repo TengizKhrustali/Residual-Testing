@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residual Method Tester</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <div class="max-w-5xl mx-auto p-6">
+        <header class="mb-8 border-b pb-4">
+            <h1 class="text-3xl font-extrabold text-blue-800">Residual Method Tester</h1>
+            <p class="text-gray-500">Project Valuation & Land Value Calculator</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-lg font-bold mb-4 text-gray-700">🏗️ Building Areas (m²)</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Flat Area</label>
+                            <input type="number" id="flat_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Commercial</label>
+                            <input type="number" id="comm_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Parking (Units)</label>
+                            <input type="number" id="p_units" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Other (Stairs etc.)</label>
+                            <input type="number" id="other_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-lg font-bold mb-4 text-gray-700">💰 Sales & Costs (Excl. VAT)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Flat Price / m²</label>
+                                <input type="number" id="flat_price" value="1400" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
+                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="flat_vat">$1,652</b></span>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Comm. Price / m²</label>
+                                <input type="number" id="comm_price" value="1400" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
+                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="comm_vat">$1,652</b></span>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Parking Price / Unit</label>
+                                <input type="number" id="p_price" value="6000" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
+                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="p_vat">$7,080</b></span>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-1">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Build Cost / m²</label>
+                                <input type="number" id="b_cost_m2" value="300" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">G&A / Marketing</label>
+                                <input type="number" id="ga" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Interest Expenses</label>
+                                <input type="number" id="interest" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-blue-900 text-white p-8 rounded-2xl shadow-xl">
+                    <p class="text-blue-300 text-xs font-bold uppercase tracking-widest mb-2">Residual Land Value</p>
+                    <h2 id="res_land" class="text-5xl font-black mb-6">$0</h2>
+                    <div class="space-y-3 border-t border-blue-800 pt-6">
+                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Rev</span><span id="t_rev" class="font-bold"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Build</span><span id="t_build" class="font-bold text-red-300"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Profit</span><span id="t_profit" class="font-bold text-green-300"></span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Target Profit Margin (%)</label>
+                    <input type="number" id="p_rate" value="30" oninput="calc()" class="w-full text-3xl font-bold text-green-600 outline-none">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const VAT = 1.18;
+        function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+        function calc() {
+            const vals = {
+                fa: +document.getElementById('flat_area').value,
+                ca: +document.getElementById('comm_area').value,
+                oa: +document.getElementById('other_area').value,
+                pu: +document.getElementById('p_units').value,
+                fp: +document.getElementById('flat_price').value,
+                cp: +document.getElementById('comm_price').value,
+                pp: +document.getElementById('p_price').value,
+                bc: +document.getElementById('b_cost_m2').value,
+                ga: +document.getElementById('ga').value,
+                ie: +document.getElementById('interest').value,
+                pr: +document.getElementById('p_rate').value / 100
+            };
+
+            // VAT indicators
+            document.getElementById('flat_vat').innerText = fmt(vals.fp * VAT);
+            document.getElementById('comm_vat').innerText = fmt(vals.cp * VAT);
+            document.getElementById('p_vat').innerText = fmt(vals.pp * VAT);
+
+            const totalArea = vals.fa + vals.ca + vals.oa;
+            const totalBuild = totalArea * vals.bc;
+            const totalRev = (vals.fa * vals.fp) + (vals.ca * vals.cp) + (vals.pu * vals.pp);
+            const targetProfit = totalRev * vals.pr;
+            const residual = totalRev - totalBuild - vals.ga - vals.ie - targetProfit;
+
+            document.getElementById('t_rev').innerText = fmt(totalRev);
+            document.getElementById('t_build').innerText = '-' + fmt(totalBuild);
+            document.getElementById('t_profit').innerText = '-' + fmt(targetProfit);
+            document.getElementById('res_land').innerText = fmt(residual);
+        }
+        calc();
+    </script>
+</body>
+</html>

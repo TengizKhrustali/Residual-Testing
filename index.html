@@ -3,96 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Residual Method Tester</title>
+    <title>Residual Method Template</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans">
-    <div class="max-w-5xl mx-auto p-6">
-        <header class="mb-8 border-b pb-4">
-            <h1 class="text-3xl font-extrabold text-blue-800">Residual Method Tester</h1>
-            <p class="text-gray-500">Project Valuation & Land Value Calculator</p>
-        </header>
+<body class="bg-gray-100 p-4 md:p-8 font-sans">
+    <div class="max-w-6xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden">
+        <div class="bg-slate-800 p-6 text-white">
+            <h1 class="text-2xl font-bold">Residual Method Testing Template</h1>
+            <p class="text-slate-400 text-sm">Web-based Property Valuation Tool</p>
+        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-6">
-                <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-bold mb-4 text-gray-700">🏗️ Building Areas (m²)</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
+            <div class="p-6 bg-gray-50/50">
+                <h2 class="text-blue-700 font-bold uppercase tracking-wider text-sm mb-6 flex items-center">
+                    <span class="mr-2">📝</span> Inputs
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Land Area (m²)</label>
+                            <input type="number" id="land_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-2 bg-transparent text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">K2 Coefficient</label>
+                            <input type="number" id="k2" value="0" step="0.1" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-2 bg-transparent text-lg">
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase">Flat Area</label>
-                            <input type="number" id="flat_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase">Commercial</label>
-                            <input type="number" id="comm_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase">Parking (Units)</label>
-                            <input type="number" id="p_units" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-500 uppercase">Other (Stairs etc.)</label>
-                            <input type="number" id="other_area" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2 text-lg font-medium">
-                        </div>
+                        <div><label class="text-[10px] font-bold text-gray-400 uppercase">Flat m²</label><input type="number" id="area_flat" value="0" oninput="calc()" class="w-full border p-2 rounded"></div>
+                        <div><label class="text-[10px] font-bold text-gray-400 uppercase">Comm. m²</label><input type="number" id="area_comm" value="0" oninput="calc()" class="w-full border p-2 rounded"></div>
+                        <div><label class="text-[10px] font-bold text-gray-400 uppercase">Airs/Stairs</label><input type="number" id="area_other" value="0" oninput="calc()" class="w-full border p-2 rounded"></div>
+                        <div><label class="text-[10px] font-bold text-gray-400 uppercase">Parking Units</label><input type="number" id="p_units" value="0" oninput="calc()" class="w-full border p-2 rounded"></div>
                     </div>
-                </section>
 
-                <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-bold mb-4 text-gray-700">💰 Sales & Costs (Excl. VAT)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-4">
+                    <div class="space-y-4 pt-4 border-t">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">Flat Price / m²</label>
-                                <input type="number" id="flat_price" value="1400" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
-                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="flat_vat">$1,652</b></span>
+                                <label class="block text-xs font-bold text-gray-500 uppercase">Build Cost / m²</label>
+                                <input type="number" id="cost_m2" value="300" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-1">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">Comm. Price / m²</label>
-                                <input type="number" id="comm_price" value="1400" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
-                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="comm_vat">$1,652</b></span>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">Parking Price / Unit</label>
-                                <input type="number" id="p_price" value="6000" oninput="calc()" class="w-full border-b-2 border-blue-200 focus:border-blue-500 outline-none py-2 text-xl">
-                                <span class="text-[10px] text-gray-400">Incl. VAT (18%): <b id="p_vat">$7,080</b></span>
+                                <label class="block text-xs font-bold text-gray-500 uppercase">Parking Price</label>
+                                <input type="number" id="p_price" value="6000" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-1">
                             </div>
                         </div>
-                        <div class="space-y-4 pt-1">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">Build Cost / m²</label>
-                                <input type="number" id="b_cost_m2" value="300" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
+                                <label class="block text-xs font-bold text-gray-500 uppercase">Flat Price / m²</label>
+                                <input type="number" id="f_price" value="1400" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-1">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">G&A / Marketing</label>
-                                <input type="number" id="ga" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase">Interest Expenses</label>
-                                <input type="number" id="interest" value="0" oninput="calc()" class="w-full border-b-2 border-gray-200 focus:border-blue-500 outline-none py-2">
+                                <label class="block text-xs font-bold text-gray-500 uppercase">Comm. Price / m²</label>
+                                <input type="number" id="c_price" value="1400" oninput="calc()" class="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-1">
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
-
-            <div class="space-y-6">
-                <div class="bg-blue-900 text-white p-8 rounded-2xl shadow-xl">
-                    <p class="text-blue-300 text-xs font-bold uppercase tracking-widest mb-2">Residual Land Value</p>
-                    <h2 id="res_land" class="text-5xl font-black mb-6">$0</h2>
-                    <div class="space-y-3 border-t border-blue-800 pt-6">
-                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Rev</span><span id="t_rev" class="font-bold"></span></div>
-                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Build</span><span id="t_build" class="font-bold text-red-300"></span></div>
-                        <div class="flex justify-between text-sm"><span class="text-blue-300">Total Profit</span><span id="t_profit" class="font-bold text-green-300"></span></div>
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Target Profit Margin (%)</label>
-                    <input type="number" id="p_rate" value="30" oninput="calc()" class="w-full text-3xl font-bold text-green-600 outline-none">
+            <div class="p-6 bg-white">
+                <h2 class="text-green-700 font-bold uppercase tracking-wider text-sm mb-6 flex items-center">
+                    <span class="mr-2">📊</span> Calculations
+                </h2>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end border-b pb-2">
+                        <span class="text-sm text-gray-600">Buildable Area (K2)</span>
+                        <span id="res_k2_area" class="font-bold text-lg text-gray-800">0 m²</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-slate-50 rounded-lg">
+                            <p class="text-[10px] text-gray-400 uppercase font-bold">Total Revenue (Ex-VAT)</p>
+                            <p id="res_total_rev" class="text-xl font-black text-slate-800">$0</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg">
+                            <p class="text-[10px] text-gray-400 uppercase font-bold">Construction Costs</p>
+                            <p id="res_build_cost" class="text-xl font-black text-red-600">$0</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <p class="text-xs text-blue-600 font-bold uppercase mb-1">Residual Land Value</p>
+                        <p id="res_land_value" class="text-4xl font-black text-blue-900">$0</p>
+                    </div>
+
+                    <div class="pt-4 space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Flat Revenue</span><span id="val_f_rev"></span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Commercial Revenue</span><span id="val_c_rev"></span></div>
+                        <div class="flex justify-between font-bold border-t pt-2 mt-2">
+                            <span>Dev. Profit (30%)</span>
+                            <span id="val_profit" class="text-green-600"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,38 +109,49 @@
 
     <script>
         const VAT = 1.18;
-        function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+        const PROFIT_RATE = 0.30;
+        const fmt = (v) => '$' + Math.round(v).toLocaleString();
 
         function calc() {
-            const vals = {
-                fa: +document.getElementById('flat_area').value,
-                ca: +document.getElementById('comm_area').value,
-                oa: +document.getElementById('other_area').value,
-                pu: +document.getElementById('p_units').value,
-                fp: +document.getElementById('flat_price').value,
-                cp: +document.getElementById('comm_price').value,
-                pp: +document.getElementById('p_price').value,
-                bc: +document.getElementById('b_cost_m2').value,
-                ga: +document.getElementById('ga').value,
-                ie: +document.getElementById('interest').value,
-                pr: +document.getElementById('p_rate').value / 100
-            };
+            // Inputs
+            const landArea = +document.getElementById('land_area').value;
+            const k2 = +document.getElementById('k2').value;
+            const fArea = +document.getElementById('area_flat').value;
+            const cArea = +document.getElementById('area_comm').value;
+            const oArea = +document.getElementById('area_other').value;
+            const pUnits = +document.getElementById('p_units').value;
+            
+            const costM2 = +document.getElementById('cost_m2').value;
+            const fPrice = +document.getElementById('f_price').value;
+            const cPrice = +document.getElementById('c_price').value;
+            const pPrice = +document.getElementById('p_price').value;
 
-            // VAT indicators
-            document.getElementById('flat_vat').innerText = fmt(vals.fp * VAT);
-            document.getElementById('comm_vat').innerText = fmt(vals.cp * VAT);
-            document.getElementById('p_vat').innerText = fmt(vals.pp * VAT);
+            // Calc K2 Area
+            const buildableK2 = landArea * k2;
+            document.getElementById('res_k2_area').innerText = buildableK2.toLocaleString() + ' m²';
 
-            const totalArea = vals.fa + vals.ca + vals.oa;
-            const totalBuild = totalArea * vals.bc;
-            const totalRev = (vals.fa * vals.fp) + (vals.ca * vals.cp) + (vals.pu * vals.pp);
-            const targetProfit = totalRev * vals.pr;
-            const residual = totalRev - totalBuild - vals.ga - vals.ie - targetProfit;
+            // Revenues
+            const fRev = fArea * fPrice;
+            const cRev = cArea * cPrice;
+            const pRev = pUnits * pPrice;
+            const totalRev = fRev + cRev + pRev;
 
-            document.getElementById('t_rev').innerText = fmt(totalRev);
-            document.getElementById('t_build').innerText = '-' + fmt(totalBuild);
-            document.getElementById('t_profit').innerText = '-' + fmt(targetProfit);
-            document.getElementById('res_land').innerText = fmt(residual);
+            // Costs
+            const totalBuildingArea = fArea + cArea + oArea;
+            const constructionCosts = totalBuildingArea * costM2;
+
+            // Profit & Land
+            const profitFig = totalRev * PROFIT_RATE;
+            const residualLand = totalRev - constructionCosts - profitFig;
+
+            // Updates
+            document.getElementById('res_total_rev').innerText = fmt(totalRev);
+            document.getElementById('res_build_cost').innerText = fmt(constructionCosts);
+            document.getElementById('res_land_value').innerText = fmt(residualLand);
+            
+            document.getElementById('val_f_rev').innerText = fmt(fRev);
+            document.getElementById('val_c_rev').innerText = fmt(cRev);
+            document.getElementById('val_profit').innerText = fmt(profitFig);
         }
         calc();
     </script>
